@@ -26,6 +26,7 @@ const io = new Server(server, {
 
 app.use(express.json());
 
+
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('disconnect', () => {
@@ -35,8 +36,24 @@ io.on('connection', (socket) => {
 
 app.use(cors({
     origin: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
+    allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     optionsSuccessStatus: 200
 }));
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+    socket.on('joinRoom', (chatRoomId) => {
+        socket.join(chatRoomId);
+        console.log(`User joined room: ${chatRoomId}`);
+    });
+    socket.on('chat message', (msg) => {
+        io.to(msg.chatRoomId).emit('chat message', msg);
+    });
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
 
 app.use(express.static(path.join(__dirname, 'uploads')));
 app.use("/uploads", express.static(path.join(__dirname, 'uploads')));

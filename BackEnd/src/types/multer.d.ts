@@ -1,4 +1,3 @@
-// src/types/multer.d.ts
 
 import { Request } from 'express';
 

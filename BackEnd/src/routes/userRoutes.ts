@@ -1,15 +1,13 @@
 // routes/userRoutes.ts
 import { Router } from 'express';
-import { getAgencies, addUser, loginUser, check, userDetails } from '../controller/userController';
+import { getAgencies, addUser, loginUser, userDetails } from '../controller/userController';
 import {validateUser} from '../middleware/validateUser'
 import { upload } from '../middleware/upload';
 import { authorizeUser } from '../middleware/authorizeUser';
-import { acceptJobSeeker } from '../controller/userController';
-import { getMessages, sendMessage } from '../controller/ChatController';
+import { acceptJobSeeker,getMessages, sendMessage } from '../controller/userController';
 
 const router = Router();
 
-router.get('/', check);
 router.get('/agencies', getAgencies);
 router.post('/signup', upload.fields([{name:"profileImg"},{name:"resume"}]), validateUser,addUser);
 router.get('/userDetails/:userId',authorizeUser, userDetails)
