@@ -1,5 +1,13 @@
 body{
-  background-color:bisque
+  /* background-color:bisque */
+  background-image: url('https://media.giphy.com/media/sxwk9hGlsULcYm6hDX/giphy.gif');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-repeat: repeat-y;
+  background-position: bottom;
+  display: flex;
+  flex-direction: column; 
 }
 .profile-header {
   color: #007bff;
@@ -8,6 +16,10 @@ body{
 
 .card {
   border-radius: 15px; 
+  
+}
+.card-body{
+  
 }
 
 .card-title {
@@ -32,6 +44,8 @@ body{
   max-width: 150px; 
   border: 2px solid #007bff;
   border-radius: 10px; 
+  align-items: right;
+  margin: left;
 }
 
 .job-seeker-item {
@@ -58,6 +72,8 @@ body{
 
 .login-form {
   background-color: lightblue;
+  /* background-image: url('data:image/svg+xml;utf8,<svg width="600" height="227" viewBox="0 0 600 227" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="227" rx="5" fill="url(%23paint0_linear_1_2)"/><defs><linearGradient id="paint0_linear_1_2" x1="7.71428" y1="9.08" x2="618.82" y2="137.312" gradientUnits="userSpaceOnUse"><stop offset="0.0104167" stop-color="%23353535"/><stop offset="0.973958" stop-color="%23D7D7D7"/></linearGradient></defs></svg>'); */
+  
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -77,6 +93,10 @@ body{
 
 .signup-form {
   background-color: lightblue;
+  /* background-image: url('data:image/svg+xml;utf8,<svg width="600" height="227" viewBox="0 0 600 227" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="600" height="227" rx="5" fill="url(%23paint0_linear_1_2)"/><defs><linearGradient id="paint0_linear_1_2" x1="7.71428" y1="9.08" x2="618.82" y2="137.312" gradientUnits="userSpaceOnUse"><stop offset="0.0104167" stop-color="%23353535"/><stop offset="0.973958" stop-color="%23D7D7D7"/></linearGradient></defs></svg>'); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   padding: 20px;
   border-radius: 8px;
   margin: auto;
@@ -97,6 +117,29 @@ margin: auto;
   /* margin: auto; */
   display: flex;
   justify-content: center;
+}
+
+/* App.css */
+body, html {
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  height: 100%;
+}
+
+.app-container {
+  /* background-image: url('https://media.giphy.com/media/sxwk9hGlsULcYm6hDX/giphy.gif');
+  background-size: cover;
+  background-repeat: no-repeat; */
+  /* background-position: center; */
+  /* background-position: center;
+  height: 100%;
+  display: flex;
+  flex-direction: column; */
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 
 

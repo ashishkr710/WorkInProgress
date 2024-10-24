@@ -2,7 +2,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Formik, Form, Field } from 'formik';
-// import { baseURL } from '../../environments/environment';
 import * as Yup from 'yup';
 import axios from 'axios';
 import { useEffect } from 'react';
@@ -34,7 +33,6 @@ export default function Login() {
       const response = await axios.post(`http://localhost:3000/login`, values);
       localStorage.setItem('token', response.data.token);
       navigate('/profile');
-      // alert('Login successful!');
       toast.success('Login successful.');
     } catch (error) {
       console.error(error);

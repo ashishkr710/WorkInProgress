@@ -3,23 +3,17 @@ import { useParams } from 'react-router-dom';
 import io from 'socket.io-client';
 import axios from 'axios';
 import { baseURL } from '../../environments/environment';
-
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const socket = io('http://localhost:3000');
 
 const Chat: React.FC = () => {
     const { userId, agencyId } = useParams<{ userId: string; agencyId: string }>();
     const [message, setMessage] = useState('');
-    const [messages, setMessages] = useState<string[]>([]);
-    console.log('messages', messages);
+    const [messages, setMessages] = useState<{ id: string; chatRoomId: string; senderId: string; message: string; createdAt: string; updatedAt: string; }[]>([]);
 
     useEffect(() => {
-        const fetchMessages = async () => {
-            // const response = await axios.get(`${baseURL}?chatRoomId=${userId}-${agencyId}`);
-            // console.log('response', response.data);
-            // is this right api call for  -  router.get('/getMessages', getMessages); 
-
-            // setMessages(response.data);
+        const fetchMessages = async() => {
             try {
                 const response = await axios.get(`${baseURL}getMessages/${userId}-${agencyId}`);
                 setMessages(response.data);
@@ -30,8 +24,9 @@ const Chat: React.FC = () => {
 
         fetchMessages();
 
-        socket.on('chat message', (msg: string) => {
-            // console.log('messages', msg);
+        socket.emit('joinRoom', `${userId}-${agencyId}`);
+
+        socket.on('chat message', (msg: { id: string; chatRoomId: string; senderId: string; message: string; createdAt: string; updatedAt: string; }) => {
             setMessages((prevMessages) => [...prevMessages, msg]);
         });
 
@@ -47,7 +42,6 @@ const Chat: React.FC = () => {
                 senderId: userId,
                 message,
             });
-            // console.log('Message sent:', response.data);
             socket.emit('chat message', response.data);
             setMessage('');
         } catch (error) {
@@ -56,43 +50,23 @@ const Chat: React.FC = () => {
     };
 
     return (
-        // <div>
-        //     <div>
-        //         { messages?.length > 0 ? (
-        //             messages?.map((msg, index) => (
-        //                 <div key={index}>{msg}</div>
-        //             ))
-        //         ) : (
-        //             <div>No messages yet</div>
-        //         )}
-        //     </div>
-        //     <input
-        //         type="text"
-        //         value={message}
-        //         onChange={(e) => setMessage(e.target.value)}    
-        //         placeholder="Type your message here"
-        //     />
-        //     <button onClick={sendMessage}>Send</button>
-        // </div>
         <div className="container mt-5">
             <div className="card">
                 <div className="card-header">
-                    <h4>Chat Room</h4>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <h4>Chat Room</h4>
+                        <button className="btn btn-secondary mt-6" style={{ marginRight: '0' }} onClick={() => window.history.back()}>
+                            Back to Profile
+                        </button>
+                    </div>
                 </div>
                 <div className="card-body">
                     <div className="chat-messages mb-3" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                        {/* {messages.map((msg, index) => (
-                            <div key={index} className="alert alert-secondary">
-                                {msg}
+                        {messages.map((msg) => (
+                            <div key={msg.id} className="alert alert-secondary">
+                                {msg.message}
                             </div>
-                        ))} */}
-                        {messages?.length > 0 ? (
-                            messages?.map((msg, index) => (
-                                <div key={index} className='alert alert-secondry'>{msg}</div>
-                            ))
-                        ) : (
-                            <div>No messages yet</div>
-                        )}
+                        ))}
                     </div>
                     <div className="input-group">
                         <input

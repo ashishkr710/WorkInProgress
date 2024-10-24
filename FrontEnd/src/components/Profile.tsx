@@ -6,6 +6,7 @@ import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 interface JobSeeker {
   id: number;
@@ -37,7 +38,7 @@ interface Agency {
   JobSeekers: JobSeeker[];
 }
 
-const Profile: React.FC  = () => {
+const Profile: React.FC = () => {
   const [userData, setUserData] = useState<JobSeeker | Agency | null>(null);
   const [status, setStatus] = useState<string>('');
   const navigate = useNavigate();
@@ -111,7 +112,7 @@ const Profile: React.FC  = () => {
       } else {
         toast.error('No job seekers available for chat');
       }
-    } 
+    }
   };
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -125,18 +126,22 @@ const Profile: React.FC  = () => {
 
   return (
     <div className="container mt-5 aling">
-      <h2 className="text-center mb-4 profile-header">{isJobSeeker(userData) ? 'Job Seeker Profile' : 'Agency Profile'}</h2>
+
       <div className="card mb-4 shadow-lg">
-        <div className="card-body">
-          <h3 className="card-title">{userData.firstName} {userData.lastName}</h3>
-          <p className="card-text"><strong>Email:</strong> {userData.email}</p>
-          <p className="card-text"><strong>Gender:</strong> {userData.gender}</p>
-          {isJobSeeker(userData) && (
-            <p className="card-text"><strong>Status:</strong> {userData.status}</p>
-          )}
-          {userData.profileImg && (
-            <img src={`${baseURL}${userData.profileImg}`} alt="profileImg" className="img-fluid rounded agency-img  " />
-          )}
+        <div className="card-body ">
+          <h2 className="text-center mb-4 profile-header">{isJobSeeker(userData) ? 'Job Seeker Profile' : 'Agency Profile'}</h2>
+          <div className='col-md-6'>
+            <h3 className="card-title">{userData.firstName} {userData.lastName}</h3>
+            <p className="card-text"><strong>Email:</strong> {userData.email}</p>
+            <p className="card-text"><strong>Gender:</strong> {userData.gender}</p>
+
+            {isJobSeeker(userData) && (
+              <p className="card-text"><strong>Status:</strong> {userData.status}</p>
+            )}
+          </div>
+          <div className='col-md-6'>{userData.profileImg && (
+            <img src={`${baseURL}${userData.profileImg}`} alt="profileImg" className="img-fluid rounded-circle " style={{ width: '150px', height: '150px' }} />
+          )}</div>
           {isJobSeeker(userData) && (
             <>
               <p className="card-text"><strong>Contact: </strong> {userData.contact}</p>
@@ -144,6 +149,11 @@ const Profile: React.FC  = () => {
                 <p className="card-text">
                   <strong>Resume:</strong> <a href={`${baseURL}${userData.resume}`} target="_blank" className="btn btn-link resume-link">Download</a>
                 </p>
+              )}
+              {userData.status === 'accepted' && (
+                <button onClick={handleChat} className="btn btn-primary btn-sm ">
+                  Chat
+                </button>
               )}
 
               {userData.Agency && (
@@ -155,6 +165,7 @@ const Profile: React.FC  = () => {
                   {userData.Agency.profileImg && (
                     <img src={`${baseURL}${userData.Agency.profileImg}`} alt="Agency" className="img-fluid rounded agency-img" />
                   )}
+
                 </div>
               )}
             </>
@@ -188,7 +199,7 @@ const Profile: React.FC  = () => {
                     ) : (
                       <>
                         {jobSeeker.status === 'accepted' ? (
-                          
+
                           <button
                             onClick={() => updateStatus(userData.id, jobSeeker.id, 'rejected')}
                             className='btn btn-danger btn-sm'
@@ -206,26 +217,25 @@ const Profile: React.FC  = () => {
                       </>
                     )}
                     {userData.JobSeekers.length > 0 && jobSeeker.status === 'accepted' && (
-                <button onClick={handleChat} className="btn btn-primary btn-sm ">
-                  Chat
-                </button>
-                )}
+                      <button onClick={handleChat} className="btn btn-primary btn-sm ">
+                        Chat
+                      </button>
+                    )}
                     {jobSeeker.resume && <a href={`${baseURL}${jobSeeker.resume}`} target="_blank" className="btn btn-link">Download Resume</a>}
-                    
+
                   </li>
                 ))}
               </ul>
-                
+
             </div>
 
           )}
+
         </div>
+        <button onClick={handleLogout} className="btn mb-5 btn-danger   ">
+          Logout
+        </button>
       </div>
-
-
-      <button onClick={handleLogout} className="btn mb-5 btn-danger ">
-        Logout
-      </button>
     </div>
   );
 };

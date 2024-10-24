@@ -147,21 +147,32 @@ export default function SignUp() {
                             </div>
 
                             <div className="form-row">
+                            <div className="form-group col-md-6">
+                                    <label htmlFor="contact">Contact</label>
+                                    <Field maxlength="10" type="text" className="form-control" placeholder="Enter Contact Number" name="contact" id="contact" />
+                                    <ErrorMessage name="contact" component="div" className="text-danger" />
+                                </div>
+
                                 <div className="form-group col-md-6">
                                     <label htmlFor="email">Email</label>
                                     <Field type="email" maxlength="40" className="form-control" placeholder="Enter Email" name="email" id="email" />
                                     <ErrorMessage name="email" component="div" className="text-danger" />
                                 </div>
 
-                                <div className="form-group col-md-6">
-                                    <label htmlFor="contact">Contact</label>
-                                    <Field maxlength="10" type="text" className="form-control" placeholder="Enter Contact Number" name="contact" id="contact" />
-                                    <ErrorMessage name="contact" component="div" className="text-danger" />
-                                </div>
+                               
 
                             </div>
 
                             <div className="form-row">
+                            <div className="form-group col-md-6">
+                                    <label>Gender</label>
+                                    <div>
+                                        <Field type="radio" name="gender" value="Male" /> Male
+                                        <Field className="ml-2" type="radio" name="gender" value="Female" /> Female
+                                        <Field className="ml-2" type="radio" name="gender" value="Other" /> Other
+                                        <ErrorMessage name="gender" component="div" className="text-danger" />
+                                    </div>
+                                </div>
 
                                 <div className="form-group col-md-6">
                                     <label htmlFor="role">User Type</label>
@@ -178,29 +189,10 @@ export default function SignUp() {
                                     </Field>
                                     <ErrorMessage name="role" component="div" className="text-danger" />
                                 </div>
-                                <div className="form-group col-md-2">
-                                    <label>Gender</label>
-                                    <div>
-                                        <Field type="radio" name="gender" value="Male" /> Male
-                                        <Field className="ml-1" type="radio" name="gender" value="Female" /> Female
-                                        <ErrorMessage name="gender" component="div" className="text-danger" />
-                                    </div>
-                                </div>
-                                {/* <div className="form-group col-md-4">
-                            <label>Hobbies</label>
-                            <div className='d-flex'>
-                                {['Sports', 'Dance', 'Reading', 'Singing'].map((hobby) => (
-                                    <div className="mr-2" key={hobby}>
-                                        <Field className="mr-1" type="checkbox" name="hobbies" value={hobby} />
-                                        {hobby}
-                                    </div>
-                                ))}
-                            </div>
-                            <ErrorMessage name="hobbies" component="div" className="text-danger" />
-                        </div> */}
+                               
                             </div>
                             <div className="form-group">
-                                <label htmlFor="img">Profile Image (JPG, PNG)</label>
+                                <label htmlFor="img">Profile Image</label>
                                 <input
                                     className="form-control"
                                     type="file"
@@ -216,10 +208,10 @@ export default function SignUp() {
 
                             {values.role === '1' && (
                                 <>
-                                    <div className="form-group col-md-4">
+                                    <div className="form-group col-md-6">
                                         <label>Hobbies</label>
                                         <div className='d-flex'>
-                                            {['Sports', 'Dance', 'Reading', 'Singing'].map((hobby) => (
+                                            {['Guitar', 'Tracking', 'Reading', 'swimming','Football'].map((hobby) => (
                                                 <div className="mr-2" key={hobby}>
                                                     <Field className="mr-1" type="checkbox" name="hobbies" value={hobby} />
                                                     {hobby}
@@ -229,7 +221,7 @@ export default function SignUp() {
                                         <ErrorMessage name="hobbies" component="div" className="text-danger" />
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="resume">Upload Resume (DOCX, PDF)</label>
+                                        <label htmlFor="resume">Upload Resume</label>
                                         <input
                                             className="form-control"
                                             type="file"
